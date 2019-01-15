@@ -34,12 +34,18 @@ app.get('/products/:productId', (req, res) => {
     firebaseHelper.firestore
         .getDocument(db, productsCollection, req.params.productId)
         .then(doc => res.status(200).send(doc))
+        .catch((err) => {
+            res.error(404)
+        })
 })
 
 app.get('/products', (req, res) => {
     firebaseHelper.firestore
         .backup(db, productsCollection)
         .then(data => res.status(200).send(data))
+        .catch((err) => {
+            res.error(404)
+        })
 })
 
 app.delete('/products/:productId', (req, res) => {
@@ -49,4 +55,4 @@ app.delete('/products/:productId', (req, res) => {
     res.send('Product deleted')
 })
 
-export const webApi = functions.https.onRequest(main)
+exports.webApi = functions.https.onRequest(main)
