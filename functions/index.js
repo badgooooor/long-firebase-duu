@@ -35,6 +35,7 @@ app.get('/products/:productId', (req, res) => {
         .getDocument(db, productsCollection, req.params.productId)
         .then(doc => res.status(200).send(doc))
         .catch((err) => {
+            console.log(err)
             res.error(404)
         })
 })
@@ -44,6 +45,7 @@ app.get('/products', (req, res) => {
         .backup(db, productsCollection)
         .then(data => res.status(200).send(data))
         .catch((err) => {
+            console.log(err)
             res.error(404)
         })
 })
