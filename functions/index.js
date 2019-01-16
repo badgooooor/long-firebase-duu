@@ -20,7 +20,14 @@ main.use(bodyParser.urlencoded({ extended: false }))
 app.post('/products', (req, res) => {
     firebaseHelper.firestore
         .createNewDocument(db, productsCollection, req.body)
-    res.send('Create new product')
+        .then(docRef => {
+            console.log(docRef.id)
+            return res.status(200).send('Create new product')
+        })
+        .catch((err) => {
+            console.log(err)
+            res.error(400)
+        })
 })
 
 app.patch('/products/:productId', (req, res) => {
