@@ -17,6 +17,12 @@ main.use(bodyParser.json())
 main.use(bodyParser.urlencoded({ extended: false }))
 
 // REST API
+// Endpoint                    Request       Description
+// /products                   GET           list all products
+//                             POST          add new product
+// /products/:productId        GET           get individual product(from Id of document)
+//                             PATCH         update product's data
+//                             DELETE        delete product
 app.post('/products', (req, res) => {
     firebaseHelper.firestore
         .createNewDocument(db, productsCollection, req.body)
