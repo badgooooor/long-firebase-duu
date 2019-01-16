@@ -21,7 +21,6 @@ app.post('/products', (req, res) => {
     firebaseHelper.firestore
         .createNewDocument(db, productsCollection, req.body)
         .then(docRef => {
-            console.log(docRef.id)
             return res.status(200).send('Create new product')
         })
         .catch((err) => {
@@ -34,7 +33,11 @@ app.patch('/products/:productId', (req, res) => {
     firebaseHelper.firestore
         .updateCollection(db, productsCollection, 
         req.params.productId, req.body)
-    res.send('Update a product ', req.params.productId)
+        .then(res.status(200).send('Update a product'))
+        .catch((err) => {
+            console.log(err)
+            res.error(400)
+        })
 })
 
 app.get('/products/:productId', (req, res) => {
